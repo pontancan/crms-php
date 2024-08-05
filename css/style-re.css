@@ -1,0 +1,363 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+body {
+    background-color: white;
+}
+
+ul {
+    list-style: none;
+}
+
+.l-contents {
+    margin: 0px auto;
+    margin-top: 20px;
+    width: 80%;
+}
+
+.header {
+    height: 100px;
+}
+
+.navtab {
+    border-bottom: 2px solid #eee;
+}
+
+.navtab>ul {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.navtab .navbar li {
+    display: table-cell;
+    float: none;
+    white-space: nowrap;
+}
+
+.navtab>.navtab-bar>.active {
+    border-bottom: 3px solid #ff0033;
+}
+
+.logo {
+    color: red;
+    font-size: 50px;
+    text-decoration: none;
+}
+
+.navtab>ul>li>a {
+    color: #777;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.main-content-top {
+    margin-top: 45px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 75px;
+}
+
+.content-card {
+    width: 45%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: #777 solid 1px;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.content-card:hover {
+    border-color: #ff0033;
+    color: #ff0033;
+}
+
+.content-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.content-card i {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+footer {
+    background-color: #555;
+    color: #fff;
+    margin: 30px;
+    text-align: center;
+    padding: 10px;
+}
+
+.form-submit {
+    text-align: center;
+    /* ボタンを中央揃えにする */
+    margin-top: 20px;
+    /* ボタンとフォームの間にマージンを追加 */
+}
+
+.form-submit input[type="submit"],
+.form-submit button[type="button"] {
+    background-color: #4a90e2;
+    /* ボタンの背景色 */
+    color: white;
+    /* ボタンの文字色 */
+    border: none;
+    /* ボーダーをなくす */
+    padding: 10px 20px;
+    /* ボタンの内側の余白 */
+    font-size: 16px;
+    /* ボタンのフォントサイズ */
+    border-radius: 5px;
+    /* ボタンの角を丸くする */
+    cursor: pointer;
+    /* カーソルをポインタに変更 */
+    margin-right: 10px;
+    /* ボタン間のスペース */
+}
+
+.form-submit input[type="submit"]:hover,
+.form-submit button[type="button"]:hover {
+    background-color: #357ab8;
+    /* ホバー時の背景色 */
+}
+
+/* クリアボタンのスタイル */
+.form-submit button[type="button"] {
+    background-color: rgba(74, 144, 226, 0.2);
+    /* 透明感のある背景色 */
+    color: #4a90e2;
+    /* ボタンの文字色を設定 */
+    border: 1px solid #4a90e2;
+    /* ボーダーを設定 */
+    padding: 5px 15px;
+    /* クリアボタンのパディングを減らす */
+}
+
+.form-submit button[type="button"]:hover {
+    background-color: rgba(74, 144, 226, 0.4);
+    /* ホバー時の透明感のある背景色 */
+}
+
+.main-content {
+    margin: 40px auto;
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.progress-bar-card {
+    text-align: center;
+}
+
+.progress-bar-card__number {
+    background-color: #bbb;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+.progress-bar-card__text {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.card-is-active {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.dot {
+    text-align: center;
+    color: #bbb;
+    font-size: 20px;
+}
+
+.dot-is-active {
+    color: #4a90e2;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-subtitle {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #666;
+    line-height: 1.5;
+}
+.form-subtitle > h3 > span {
+    color: red;
+}
+
+.register {
+    max-width: 600px;
+    /* フォーム全体の最大幅を設定 */
+    margin: 0 auto;
+    /* フォームを中央揃えに */
+    padding: 20px;
+    /* フォームの内側の余白を設定 */
+    background-color: #fff;
+    /* フォームの背景色を設定 */
+    border: 1px solid #ccc;
+    /* フォームの境界線を設定 */
+    border-radius: 10px;
+    /* 角を丸くする */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* 軽い影を付ける */
+}
+
+.form-group {
+    display: flex;
+    /* 横並びにする */
+    align-items: center;
+    /* 中央揃えにする */
+    margin-bottom: 10px;
+    /* 各フォームグループの間隔を縮める */
+    width: 100%;
+}
+
+.form-group label {
+    flex: 0 0 20%;
+    /* ラベルの幅をさらに調整 */
+    font-weight: bold;
+    margin-right: 5px;
+    /* ラベルと入力欄の間のスペースをさらに縮める */
+}
+.form-group label > span{
+   font-size: 10px;
+   color: red;
+}
+
+.form-group input,
+.form-group select {
+    flex: 1;
+    /* 入力欄が残りのスペースを占める */
+    padding: 8px;
+    /* 入力欄の内側の余白を縮める */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+form {
+    max-width: 50%;
+    /* フォーム全体の最大幅を設定 */
+    margin: 0 auto;
+    /* フォームを中央揃えに */
+    padding: 20px;
+    /* フォームの内側の余白を設定 */
+    background-color: #fff;
+    /* フォームの背景色を設定 */
+    border: 1px solid #ccc;
+    /* フォームの境界線を設定 */
+    border-radius: 10px;
+    /* 角を丸くする */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* 軽い影を付ける */
+    margin-bottom: 30px;
+}
+
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* ボーダーの二重表示を防ぐ */
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* テーブル全体に影をつける */
+}
+
+.customer-table th,
+.customer-table td {
+    border: 1px solid #ddd;
+    /* セルの境界線を薄い灰色にする */
+    padding: 10px;
+    text-align: left;
+    /* テキストを左揃えにする */
+}
+
+.customer-table th {
+    background-color: #f2f2f2;
+    /* ヘッダーセルの背景色を薄い灰色にする */
+    font-weight: bold;
+}
+
+.customer-table td {
+    background-color: #fff;
+    /* データセルの背景色を白にする */
+}
+
+.customer-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+    /* 偶数行の背景色を薄い灰色にする */
+}
+
+.customer-table tr:hover td {
+    background-color: #f1f1f1;
+    /* ホバー時の行の背景色を少し濃い灰色にする */
+}
+
+.customer-table td .edit-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.customer-table td .delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.customer-table td button:hover {
+    opacity: 0.6;
+}
+
+.vali-group{
+    text-align: center;
+    color: red;
+}
+
