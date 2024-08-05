@@ -122,10 +122,9 @@
                         <option value="company_c">C社</option>  -->
                         <?php
                         while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
-                            ?>
-                            <option value="<?$row(['company_id'])?>"><?$row(['name'])?></option>
-                            <?php
-                        }
+                            // echo '<option value="' . htmlspecialchars($row['company_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</option>';
+                            echo '<option value="' . $row['company_id'] . '">' . $row['name'] . '</option>';
+                        }   
                         ?>
                             
                     </select>
@@ -146,7 +145,7 @@
         <p>Copyright© dummyインダストリー Inc. All Rights Reserved.</p>
     </footer>
     <script src="./js/vali_regi.js"></script>
-    <script src="./js/useCompanies.js" type="module"></script>
+    <!-- <script src="./js/useCompanies.js" type="module"></script> -->
 </body>
 
 </html>
