@@ -15,6 +15,13 @@ try {
 
     // 接続成功時のメッセージを表示します
     echo "ハニー、データベース接続に成功しました。";
+    echo "<br>";
+    $stt = $pdo->prepare('SELECT name FROM company');
+    $stt->execute();
+    while($row = $stt->fetch(PDO::FETCH_ASSOC)){
+        print($row)['name'];
+        echo "<br>";
+    }
 } catch (PDOException $e) {
     // 接続失敗時のメッセージを表示します
     echo "データベース接続に失敗しました: " . $e->getMessage();
