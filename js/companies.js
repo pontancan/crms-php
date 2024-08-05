@@ -12,6 +12,10 @@ export const companies = [
         'name': '山本製菓店'
     },
     {
+        'id': 4,
+        'name': 'プリキュア工務店'
+    },
+    {
         'id': 5,
         'name': '鈴木生花店'
     },

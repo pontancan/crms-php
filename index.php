@@ -11,6 +11,10 @@
     <title>トップページ</title>
 </head>
 
+<?php
+// phpinfo()
+?>
+
 <body>
     <header class="header l-contents">
         <a class="logo" href="./index.php">
