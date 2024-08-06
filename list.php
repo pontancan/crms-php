@@ -140,7 +140,7 @@
                             echo '<td>' . $row['email'] . '<br>' . $row['phone'] . '</td>';
                             echo '<td>' . $row['company_name'] . '</td>';
                             echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
-                            echo '<td> <button class="edit-button">編集</button> </td>';
+                            echo '<td> <button type="button" onclick="location.href=\'edit.php?customer_id=' . $row['customer_id'] . '\'" class="edit-button">編集</button> </td>';
                             echo '<td> <button type="submit" class="delete-button">削除</button> </td>';
                             echo '<input type="hidden" name="customer_id" value="' .$row['customer_id'].'" />';
                             echo'</tr>';

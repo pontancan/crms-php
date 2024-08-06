@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/style-re.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <title>登録ページ</title>
+    <title>編集ページ</title>
 </head>
 
 <body>
@@ -19,14 +19,33 @@
     $password = '';
 
     try {
+
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
         $pdo = new PDO($dsn, $username, $password);
 
-        
+
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stt = $pdo->prepare('SELECT company_id,name FROM company');
-        $stt->execute();
+        
+
+        // GETデータを取得
+
+        $customer_id = $_GET['customer_id'];
+
+        //名前付きぱらで
+        $sql = "select * from customer where customer_id = :customer_id";
+
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':customer_id' => $customer_id
+        ]);
+        $customer = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $sql = "SELECT company_id, name FROM company";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     } finally {
@@ -41,7 +60,7 @@
             <ul class="navtab-bar">
                 <li><a href="./index.php">トップ</a></li>
                 <li><a href="./list.php">検索</a></li>
-                <li class="active"><a href="./register.php">登録</a></li>
+                <li><a href="./register.php">登録</a></li>
                 <!-- お問い合わせは後で拡張する -->
             </ul>
         </nav>
@@ -50,37 +69,37 @@
         <div class="main-content l-contents">
 
             <div class="form-title">
-                <h2>情報登録</h2>
+                <h2>情報修正</h2>
             </div>
             <div class="form-subtitle">
-                <h3>必要な項目を入力後、「登録」ボタンを押してください。</h3>
+                <h3>必要な項目を修正後、「更新」ボタンを押してください。</h3>
                 <h3><span>※</span>は必須項目です</h3>
             </div>
             <form id="registerForm" action="./insert_process.php" class="register" method="post">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
-                    <input type="text" id="name" name="name" value="ダミーくん">
+                    <input type="text" id="name" name="name" value="<?php echo $customer['name']; ?>">
                 </div>
                 <div class="vali-group">
                     <div id="name_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="kana">顧客名カナ<span>※</span></label>
-                    <input type="text" id="kana" name="kana" placeholder="" value="ダミークン">
+                    <input type="text" id="kana" name="kana" placeholder="" value="<?php echo $customer['kana']; ?>">
                 </div>
                 <div class="vali-group">
                     <div id="kana_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="email">メールアドレス<span>※</span></label>
-                    <input type="text" id="email" name="email" value="dammy@test.com">
+                    <input type="text" id="email" name="email" value="<?php echo $customer['email']; ?>">
                 </div>
                 <div class="vali-group">
                     <div id="email_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="phone">電話番号<span>※</span></label>
-                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="0123456789">
+                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="<?php echo $customer['phone']; ?>">
                 </div>
                 <div class="vali-group">
                     <div id="phone_message" class="message"></div> <br />
@@ -89,9 +108,9 @@
                     <label for="gender">性別<span>※</span></label>
                     <select id="gender" name="gender">
                         <option value="">選択してください</option>
-                        <option value="male" selected>男性</option>
-                        <option value="female">女性</option>
-                        <option value="other">その他</option>
+                        <option value="male" <?php echo $customer['gender'] == 'male' ? 'selected' : ''; ?>>男性</option>
+                        <option value="female" <?php echo $customer['gender'] == 'female' ? 'selected' : ''; ?>>女性</option>
+                        <option value="other" <?php echo $customer['gender'] == 'other' ? 'selected' : ''; ?>>その他</option>
                     </select>
                 </div>
                 <div class="vali-group">
@@ -99,7 +118,7 @@
                 </div>
                 <div class="form-group">
                     <label for="dob">生年月日<span>※</span></label>
-                    <input type="date" id="dob" name="dob" value="1996-01-01">
+                    <input type="date" id="dob" name="dob" value="<?php echo $customer['dob']; ?>">
                 </div>
                 <div class="vali-group">
                     <div id="dob_message" class="message"></div> <br />
@@ -113,10 +132,12 @@
                         <option value="company_c">C社</option>  -->
 
                         <?php
-                        //TODO 連続で登録できてしまう問題
-                        while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
-                            // echo '<option value="' . htmlspecialchars($row['company_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</option>';
-                            echo '<option value="' . $row['company_id'] . '">' . $row['name'] . '</option>';
+                        foreach ($companies as $company) {
+                            echo '<option value="' . $company['company_id']. '"';
+                            if ($company['company_id'] == $customer['company_id']) {
+                                echo ' selected';
+                            }
+                            echo '>' .$company['name'] . '</option>';
                         }
                         ?>
 
@@ -126,7 +147,7 @@
                     <div id="company_message" class="message"></div> <br />
                 </div>
                 <div class="form-submit">
-                    <input type="submit" id="submit" value="登録">
+                    <input type="submit" id="submit" value="更新">
                 </div>
                 <div class="vali-group">
                     <div id="submit_message" class="message" style="line-height: 1.5;"></div> <br />
