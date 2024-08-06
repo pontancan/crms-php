@@ -46,6 +46,8 @@
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     } finally {
@@ -76,6 +78,7 @@
                 <h3><span>※</span>は必須項目です</h3>
             </div>
             <form id="registerForm" action="./update_process.php" class="register" method="post">
+            <input type="hidden" name="customer_id" value="<?php echo $customer['customer_id']; ?>">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
                     <input type="text" id="name" name="name" value="<?php echo $customer['name']; ?>">
