@@ -26,7 +26,7 @@
 
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        
+
 
         // GETデータを取得
 
@@ -46,8 +46,6 @@
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     } finally {
@@ -78,7 +76,7 @@
                 <h3><span>※</span>は必須項目です</h3>
             </div>
             <form id="registerForm" action="./update_process.php" class="register" method="post">
-            <input type="hidden" name="customer_id" value="<?php echo $customer['customer_id']; ?>">
+                <input type="hidden" name="customer_id" value="<?php echo $customer['customer_id']; ?>">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
                     <input type="text" id="name" name="name" value="<?php echo $customer['name']; ?>">
@@ -136,11 +134,11 @@
 
                         <?php
                         foreach ($companies as $company) {
-                            echo '<option value="' . $company['company_id']. '"';
+                            echo '<option value="' . $company['company_id'] . '"';
                             if ($company['company_id'] == $customer['company_id']) {
                                 echo ' selected';
                             }
-                            echo '>' .$company['name'] . '</option>';
+                            echo '>' . $company['name'] . '</option>';
                         }
                         ?>
 
@@ -163,7 +161,7 @@
     </footer>
     <!-- <script src="./js/vali_regi.js"></script> -->
     <!-- <script src="./js/useCompanies.js" type="module"></script> -->
-     <script src="./js/vali_edit.js"></script>
+    <script src="./js/vali_edit.js"></script>
 </body>
 
 </html>
