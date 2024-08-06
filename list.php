@@ -12,6 +12,30 @@
 </head>
 
 <body>
+    <?php
+    $host = 'localhost'; // XAMPP のデフォルトホスト
+    $dbname = 'crms_db';
+    $username = 'root';
+    $password = '';
+
+    try {
+        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+        $pdo = new PDO($dsn, $username, $password);
+
+
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stt = $pdo->prepare('
+            SELECT customer.*, company.name AS company_name 
+            FROM customer 
+            LEFT JOIN company ON customer.company_id = company.company_id');
+        $stt->execute();
+    } catch (PDOException $e) {
+        echo "データベース接続に失敗しました: " . $e->getMessage();
+    } finally {
+        $pdo = null;
+    }
+    ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">
             <h1>CRMS</h1>
@@ -32,9 +56,9 @@
             </div>
             <div class="form-subtitle">
                 <h3>必要な項目を入力後、「検索」ボタンを押してください。</h3>
-                
+
             </div>
-            <form  id="searchForm" action="index.php" method="get">
+            <form id="searchForm" action="index.php" method="get">
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <input type="text" id="name" name="name">
@@ -87,7 +111,7 @@
                 </div>
                 <div class="vali-group">
                     <div id="submit_message" class="message" style="line-height: 1.5;"></div> <br />
-                </div> 
+                </div>
             </form>
             <hr>
             <table class="customer-table">
@@ -103,6 +127,26 @@
                     </tr>
                 </thead>
                 <tbody id="customer-table-body">
+                    <?php
+                    if ($stt->rowCount() === 0) { ?>
+                        <div>該当する検索結果はありません</div>
+                    <?php
+                    } else {
+                        while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+                            echo'<tr>';
+                            echo '<td>' . $row['customer_id'] . '</td>';
+                            echo '<td>' . $row['name'] . '<br>' . $row['kana'] . '</td>';
+                            echo '<td>' . $row['email'] . '<br>' . $row['phone'] . '</td>';
+                            echo '<td>' . $row['company_name'] . '</td>';
+                            echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
+                            echo '<td> <button class="edit-button">編集</button> </td>';
+                            echo '<td> <button class="delete-button">削除</button> </td>';
+                            echo'</tr>';
+                        }
+                    }
+                    ?>
+
+
                     <!-- <tr>
                         <td>0001</td>
                         <td>山田太郎<br>ヤマダタロウ</td>
@@ -135,7 +179,7 @@
                         <td><button class="edit-button">編集</button></td>
                         <td><button class="delete-button" popovertarget="my-popover">削除</button></td>
                     </tr> -->
-                    
+
                 </tbody>
             </table>
         </div>
@@ -144,8 +188,8 @@
         <p>Copyright© dummyインダストリー Inc. All Rights Reserved.</p>
     </footer>
     <!-- <script src="./js/vali_list.js"></script> -->
-    <script src="./js/useCompanies.js" type="module"></script>
-    <script src="./js/useCustomers.js" type="module"></script>
+    <!-- <script src="./js/useCompanies.js" type="module"></script> -->
+    <!-- <script src="./js/useCustomers.js" type="module"></script> -->
 </body>
 
 </html>

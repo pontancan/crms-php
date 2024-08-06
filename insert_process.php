@@ -41,7 +41,7 @@ try {
     
 
    //3秒まつ
-    sleep(3);
+    // sleep(3);
     header('Location: list.php');
     exit();
 } catch (PDOException $e) {
