@@ -31,7 +31,8 @@ try {
             phone = :phone, 
             gender = :gender, 
             dob = :dob, 
-            company_id = :company_id
+            company_id = :company_id, 
+            modified_at = CURRENT_TIMESTAMP
             WHERE customer_id = :customer_id";
 
     // SQL文を実行します

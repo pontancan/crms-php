@@ -13,7 +13,7 @@
 
 <body>
     <?php
-    $host = 'localhost'; // XAMPP のデフォルトホスト
+    $host = 'localhost';
     $dbname = 'crms_db';
     $username = 'root';
     $password = '';
@@ -22,18 +22,45 @@
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
         $pdo = new PDO($dsn, $username, $password);
 
-
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stt = $pdo->prepare('
-            SELECT customer.*, company.name AS company_name 
-            FROM customer 
-            LEFT JOIN company ON customer.company_id = company.company_id');
-        $stt->execute();
+        $query = 'SELECT customer.*, company.name AS company_name FROM customer LEFT JOIN company ON customer.company_id = company.company_id WHERE 1=1';
+
+        $params = [];
+        if (!empty($_GET['name'])) {
+            $query .= ' AND customer.name LIKE :name';
+            $params[':name'] = '%' . $_GET['name'] . '%';
+        }
+        if (!empty($_GET['name_kana'])) {
+            $query .= ' AND customer.kana LIKE :kana';
+            $params[':kana'] = '%' . $_GET['name_kana'] . '%';
+        }
+        if (!empty($_GET['gender']) && $_GET['gender'] != 'all') {
+            $query .= ' AND customer.gender = :gender';
+            $params[':gender'] = $_GET['gender'];
+        }
+        if (!empty($_GET['dob_start'])) {
+            $query .= ' AND customer.dob >= :dob_start';
+            $params[':dob_start'] = $_GET['dob_start'];
+        }
+        if (!empty($_GET['dob_end'])) {
+            $query .= ' AND customer.dob <= :dob_end';
+            $params[':dob_end'] = $_GET['dob_end'];
+        }
+        if (!empty($_GET['company']) && $_GET['company'] != 'all') {
+            $query .= ' AND customer.company_id = :company';
+            $params[':company'] = $_GET['company'];
+        }
+
+        $stt = $pdo->prepare($query);
+        $stt->execute($params);
+
+        // 会社データの取得
+        $companyStmt = $pdo->prepare('SELECT company_id, name FROM company');
+        $companyStmt->execute();
+        $companies = $companyStmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
-    } finally {
-        $pdo = null;
     }
     ?>
     <header class="header l-contents">
@@ -45,7 +72,6 @@
                 <li><a href="./index.php">トップ</a></li>
                 <li class="active"><a href="./list.php">検索</a></li>
                 <li><a href="./register.php">登録</a></li>
-                <!-- お問い合わせは後で拡張する -->
             </ul>
         </nav>
     </header>
@@ -56,22 +82,21 @@
             </div>
             <div class="form-subtitle">
                 <h3>必要な項目を入力後、「検索」ボタンを押してください。</h3>
-
             </div>
-            <form id="searchForm" action="index.php" method="get">
+            <form id="searchForm" action="list.php" method="get">
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <input type="text" id="name" name="name">
                 </div>
                 <div class="vali-group">
-                    <div id="name_message" class="message"></div> <br />
+                    <div id="name_message" class="message"></div><br />
                 </div>
                 <div class="form-group">
                     <label for="name_kana">セイメイ</label>
                     <input type="text" id="kana" name="name_kana">
                 </div>
                 <div class="vali-group">
-                    <div id="kana_message" class="message"></div> <br />
+                    <div id="kana_message" class="message"></div><br />
                 </div>
                 <div class="form-group">
                     <label for="gender">性別</label>
@@ -84,7 +109,7 @@
                     </select>
                 </div>
                 <div class="vali-group">
-                    <div id="gender_message" class="message"></div> <br />
+                    <div id="gender_message" class="message"></div><br />
                 </div>
                 <div class="form-group">
                     <label for="dob_start">生年月日</label>
@@ -93,24 +118,29 @@
                     <input type="date" id="dob_end" name="dob_end">
                 </div>
                 <div class="vali-group">
-                    <div id="dob_message" class="message"></div> <br />
+                    <div id="dob_message" class="message"></div><br />
                 </div>
                 <div class="form-group">
                     <label for="company">所属会社</label>
                     <select id="company" name="company">
                         <option value="">選択してください</option>
                         <option value="all">全て</option>
+                        <?php
+                        foreach ($companies as $company) {
+                            echo '<option value="' . $company['company_id'] . '">' . $company['name'] . '</option>';
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="vali-group">
-                    <div id="company_message" class="message"></div> <br />
+                    <div id="company_message" class="message"></div><br />
                 </div>
                 <div class="form-submit">
                     <input type="submit" id="submit" value="検索">
-                    <button type="button" id="clearButton">クリア</button>
+                    <!-- <button type="button" id="clearButton">クリア</button> -->
                 </div>
                 <div class="vali-group">
-                    <div id="submit_message" class="message" style="line-height: 1.5;"></div> <br />
+                    <div id="submit_message" class="message" style="line-height: 1.5;"></div><br />
                 </div>
             </form>
             <hr>
@@ -129,12 +159,12 @@
                 <tbody id="customer-table-body">
                     <?php
                     if ($stt->rowCount() === 0) { ?>
-                        <div>該当する検索結果はありません</div>
+                        <div>登録されている顧客情報はありません</div>
                     <?php
                     } else {
                         while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
                             echo '<form name="deleteForm" method="post" action="delete_process.php">';
-                            echo'<tr>';
+                            echo '<tr>';
                             echo '<td>' . $row['customer_id'] . '</td>';
                             echo '<td>' . $row['name'] . '<br>' . $row['kana'] . '</td>';
                             echo '<td>' . $row['email'] . '<br>' . $row['phone'] . '</td>';
@@ -142,47 +172,12 @@
                             echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
                             echo '<td> <button type="button" onclick="location.href=\'edit.php?customer_id=' . $row['customer_id'] . '\'" class="edit-button">編集</button> </td>';
                             echo '<td> <button type="button" class="delete-button" onclick="confirmDelete(' . $row['customer_id'] . ')">削除</button> </td>';
-                            echo '<input type="hidden" name="customer_id" value="' .$row['customer_id'].'" />';
-                            echo'</tr>';
-                            echo'</form>';
+                            echo '<input type="hidden" name="customer_id" value="' . $row['customer_id'] . '" />';
+                            echo '</tr>';
+                            echo '</form>';
                         }
                     }
                     ?>
-
-
-                    <!-- <tr>
-                        <td>0001</td>
-                        <td>山田太郎<br>ヤマダタロウ</td>
-                        <td>tyamada@test.com<br>080-4444-0001</td>
-                        <td>A社</td>
-                        <td>2024/07/01<br>2024/07/01</td>
-                        <td><button class="edit-button">編集</button></td>
-                        <td><button class="delete-button" popovertarget="my-popover">削除</button></td>
-                        <div id="my-popover" popover>
-                            <h2>一度削除したデータは元に戻せません。本当に削除してもよろしいでしょうか。</h2>
-                            <button class="delete">削除</button>
-                        </div>
-                    </tr>
-
-                    <tr>
-                        <td>0002</td>
-                        <td>山田花子<br>ヤマダハナコ</td>
-                        <td>hyamada@test.com<br>080-4444-0002</td>
-                        <td>A社</td>
-                        <td>2024/07/02<br>2024/07/03</td>
-                        <td><button class="edit-button">編集</button></td>
-                        <td><button class="delete-button" popovertarget="my-popover">削除</button></td>
-                    </tr>
-                    <tr>
-                        <td>0003</td>
-                        <td>吉田茂<br>ヨシダシゲル</td>
-                        <td>syoshida@test.com<br>080-4444-0003</td>
-                        <td>B社</td>
-                        <td>2024/07/02<br>2024/07/02</td>
-                        <td><button class="edit-button">編集</button></td>
-                        <td><button class="delete-button" popovertarget="my-popover">削除</button></td>
-                    </tr> -->
-
                 </tbody>
             </table>
         </div>
@@ -191,9 +186,6 @@
         <p>Copyright© dummyインダストリー Inc. All Rights Reserved.</p>
     </footer>
     <script src="./js/app.js"></script>
-    <!-- <script src="./js/vali_list.js"></script> -->
-    <!-- <script src="./js/useCompanies.js" type="module"></script> -->
-    <!-- <script src="./js/useCustomers.js" type="module"></script> -->
 </body>
 
 </html>
