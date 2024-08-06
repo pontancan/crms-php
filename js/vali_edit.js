@@ -1,3 +1,4 @@
+// 各要素の取得
 let input_name = document.getElementById('name');
 let name_message = document.getElementById('name_message');
 let input_kana = document.getElementById('kana');
@@ -16,13 +17,13 @@ let input_submit = document.getElementById('registerForm');
 let submit_message = document.getElementById('submit_message');
 
 // 各フィールドのバリデーション結果を保持するフラグ
-let isNameValid = false;
-let isKanaValid = false;
-let isEmailValid = false;
-let isPhoneValid = false;
-let isGenderValid = false;
-let isDobValid = false;
-let isCompanyValid = false;
+let isNameValid = true;
+let isKanaValid = true;
+let isEmailValid = true;
+let isPhoneValid = true;
+let isGenderValid = true;
+let isDobValid = true;
+let isCompanyValid = true;
 
 function validateName() {
     if (input_name.value.trim() === '') {
@@ -42,10 +43,10 @@ function validateKana() {
     if (input_kana.value.trim() === '') {
         kana_message.innerText = '入力は必須です';
         isKanaValid = false;
-    } else if (!re.test(input_kana.value.trim()) ) {
+    } else if (!re.test(input_kana.value.trim())) {
         kana_message.innerText = '全角カタカナで入力してください';
         isKanaValid = false;
-    }else if (input_kana.value.trim().length < 3) {
+    } else if (input_kana.value.trim().length < 3) {
         kana_message.innerText = '3文字以上必要です';
         isKanaValid = false;
     } else {
@@ -138,48 +139,51 @@ function validateAll() {
     updateSubmitMessage();
 }
 
+// 各フィールドの変更イベントリスナー
 input_name.addEventListener('input', () => {
+    isNameValid = false;
     validateName();
     updateSubmitMessage();
 });
 
 input_kana.addEventListener('input', () => {
+    isKanaValid = false;
     validateKana();
     updateSubmitMessage();
 });
 
 input_email.addEventListener('input', () => {
+    isEmailValid = false;
     validateEmail();
     updateSubmitMessage();
 });
 
 input_phone.addEventListener('input', () => {
+    isPhoneValid = false;
     validatePhone();
     updateSubmitMessage();
 });
 
 input_gender.addEventListener('input', () => {
+    isGenderValid = false;
     validateGender();
     updateSubmitMessage();
 });
 
 input_dob.addEventListener('input', () => {
+    isDobValid = false;
     validateDob();
     updateSubmitMessage();
 });
 
 input_company.addEventListener('input', () => {
-    validateAll();
+    isCompanyValid = false;
+    validateCompany();
     updateSubmitMessage();
 });
 
-
+// 初期表示時のバリデーション
 document.addEventListener('DOMContentLoaded', (event) => {
-    validateAll();
-    updateSubmitMessage();
-});
-
-document.addEventListener('click', (event) => {
     validateAll();
     updateSubmitMessage();
 });
@@ -188,10 +192,6 @@ input_submit.addEventListener("submit", (e) => {
     validateAll();
 
     if (messages.length > 0) {
-
         e.preventDefault();
     }
 });
-
-
-

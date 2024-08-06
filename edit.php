@@ -161,8 +161,9 @@
     <footer class="footer">
         <p>Copyright© dummyインダストリー Inc. All Rights Reserved.</p>
     </footer>
-    <script src="./js/vali_regi.js"></script>
+    <!-- <script src="./js/vali_regi.js"></script> -->
     <!-- <script src="./js/useCompanies.js" type="module"></script> -->
+     <script src="./js/vali_edit.js"></script>
 </body>
 
 </html>
