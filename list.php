@@ -133,6 +133,7 @@
                     <?php
                     } else {
                         while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<form name="deleteForm" method="post" action="delete_process.php">';
                             echo'<tr>';
                             echo '<td>' . $row['customer_id'] . '</td>';
                             echo '<td>' . $row['name'] . '<br>' . $row['kana'] . '</td>';
@@ -140,8 +141,10 @@
                             echo '<td>' . $row['company_name'] . '</td>';
                             echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
                             echo '<td> <button class="edit-button">編集</button> </td>';
-                            echo '<td> <button class="delete-button">削除</button> </td>';
+                            echo '<td> <button type="submit" class="delete-button">削除</button> </td>';
+                            echo '<input type="hidden" name="customer_id" value="' .$row['customer_id'].'" />';
                             echo'</tr>';
+                            echo'</form>';
                         }
                     }
                     ?>

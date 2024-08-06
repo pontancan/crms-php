@@ -12,13 +12,26 @@ try {
     // エラーモードを例外に
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // POSTデータを取得
+    $customer_id = $_POST['customer_id'];
+    
 
+    //名前付きぱらで
+    $sql = "delete from customer where customer_id = :customer_id";
 
-    $stt = $pdo->prepare('SELECT name FROM company');
-    $stt->execute();
-    while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
-        
-    }
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':customer_id' => $customer_id
+    ]);
+
+    
+
+   //3秒まつ
+    // sleep(3);
+    header('Location: list.php');
+    exit();
+
 } catch (PDOException $e) {
 
     echo "データベース接続に失敗しました: " . $e->getMessage();

@@ -125,7 +125,7 @@
                     <div id="company_message" class="message"></div> <br />
                 </div>
                 <div class="form-submit">
-                    <input type="submit" id="submit" value="登録">
+                    <input type="submit" id="submit" value="登録">//TODO 連続で登録できてしまう問題
                 </div>
                 <div class="vali-group">
                     <div id="submit_message" class="message" style="line-height: 1.5;"></div> <br />
