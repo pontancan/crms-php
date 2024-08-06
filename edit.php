@@ -75,7 +75,7 @@
                 <h3>必要な項目を修正後、「更新」ボタンを押してください。</h3>
                 <h3><span>※</span>は必須項目です</h3>
             </div>
-            <form id="registerForm" action="./insert_process.php" class="register" method="post">
+            <form id="registerForm" action="./update_process.php" class="register" method="post">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
                     <input type="text" id="name" name="name" value="<?php echo $customer['name']; ?>">

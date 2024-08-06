@@ -141,7 +141,7 @@
                             echo '<td>' . $row['company_name'] . '</td>';
                             echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
                             echo '<td> <button type="button" onclick="location.href=\'edit.php?customer_id=' . $row['customer_id'] . '\'" class="edit-button">編集</button> </td>';
-                            echo '<td> <button type="submit" class="delete-button">削除</button> </td>';
+                            echo '<td> <button type="button" class="delete-button" onclick="confirmDelete(' . $row['customer_id'] . ')">削除</button> </td>';
                             echo '<input type="hidden" name="customer_id" value="' .$row['customer_id'].'" />';
                             echo'</tr>';
                             echo'</form>';
@@ -190,6 +190,7 @@
     <footer class="footer">
         <p>Copyright© dummyインダストリー Inc. All Rights Reserved.</p>
     </footer>
+    <script src="./js/app.js"></script>
     <!-- <script src="./js/vali_list.js"></script> -->
     <!-- <script src="./js/useCompanies.js" type="module"></script> -->
     <!-- <script src="./js/useCustomers.js" type="module"></script> -->

@@ -13,7 +13,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // POSTデータを取得
-    $customer_id = $_POST['customer_id'];
+    $customer_id = $_GET['customer_id'];
     
 
     //名前付きぱらで
