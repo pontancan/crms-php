@@ -13,19 +13,23 @@
 
 <body>
     <?php
-    $host = 'localhost'; // XAMPP のデフォルトホスト
-    $dbname = 'crms_db';
-    $username = 'root';
-    $password = '';
+    require_once dirname(__FILE__) . '/lib/DBcon.php';
 
+    
+    // $host = 'localhost'; // XAMPP のデフォルトホスト
+    // $dbname = 'crms_db';
+    // $username = 'root';
+    // $password = '';
+    
     try {
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-        $pdo = new PDO($dsn, $username, $password);
+        // $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+        // $pdo = new PDO($dsn, $username, $password);
+        
+        $pdo2 = (new DBcon())-> getDB();
 
+        // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stt = $pdo->prepare('SELECT company_id,name FROM company');
+        $stt = $pdo2->prepare('SELECT company_id,name FROM company');
         $stt->execute();
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
