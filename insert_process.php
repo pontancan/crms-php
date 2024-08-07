@@ -1,16 +1,16 @@
 <?php
 
 $host = 'localhost'; // XAMPP のデフォルトホストを指定する
-$dbname = 'crms_db'; 
+$dbname = 'crms_db';
 $username = 'root';
-$password = ''; 
+$password = '';
 
 try {
-    
+
     $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
     $pdo = new PDO($dsn, $username, $password);
 
-    
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // POSTデータを取得
@@ -26,7 +26,7 @@ try {
     $sql = "INSERT INTO customer (name, kana, email, phone, gender, dob, company_id) 
              VALUES (:name, :kana, :email, :phone, :gender, :dob, :company_id)";
 
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':name' => $name,
@@ -38,14 +38,14 @@ try {
         ':company_id' => $company_id
     ]);
 
-    
 
-   //3秒まつ
+
+    //3秒まつ
     // sleep(3);
     header('Location: list.php');
     exit();
 } catch (PDOException $e) {
-    
+
     echo "データベース接続に失敗しました: " . $e->getMessage();
 } finally {
     //一応接続を切る

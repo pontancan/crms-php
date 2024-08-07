@@ -14,7 +14,7 @@ try {
 
     // POSTデータを取得
     $customer_id = $_GET['customer_id'];
-    
+
 
     //物理削除
     $sql = "delete from customer where customer_id = :customer_id";
@@ -23,19 +23,18 @@ try {
 
 
 
-    
+
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':customer_id' => $customer_id
     ]);
 
-    
 
-   //3秒まつ
+
+    //3秒まつ
     // sleep(3);
     header('Location: list.php');
     exit();
-
 } catch (PDOException $e) {
 
     echo "データベース接続に失敗しました: " . $e->getMessage();

@@ -22,7 +22,7 @@
         $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
         $pdo = new PDO($dsn, $username, $password);
 
-        
+
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stt = $pdo->prepare('SELECT company_id,name FROM company');
@@ -113,7 +113,7 @@
                         <option value="company_c">C社</option>  -->
 
                         <?php
-                        
+
                         while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
                             // echo '<option value="' . htmlspecialchars($row['company_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</option>';
                             echo '<option value="' . $row['company_id'] . '">' . $row['name'] . '</option>';
