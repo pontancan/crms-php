@@ -57,10 +57,13 @@ function validateKana() {
 
 function validateEmail() {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const re_html5 = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+;
+
     if (input_email.value.trim() === '') {
         email_message.innerText = '入力は必須です';
         isEmailValid = false;
-    } else if (!re.test(input_email.value.trim())) {
+    } else if (!re_html5.test(input_email.value.trim())) {
         email_message.innerText = '有効なメールアドレスではありません';
         isEmailValid = false;
     } else {
