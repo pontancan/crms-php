@@ -174,15 +174,15 @@ input_company.addEventListener('input', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    validateAll();
-    updateSubmitMessage();
-});
+// document.addEventListener('DOMContentLoaded', (event) => {
+//     validateAll();
+//     updateSubmitMessage();
+// });
 
-document.addEventListener('click', (event) => {
-    validateAll();
-    updateSubmitMessage();
-});
+// document.addEventListener('click', (event) => {
+//     validateAll();
+//     updateSubmitMessage();
+// });
 
 input_submit.addEventListener("submit", (e) => {
     validateAll();
