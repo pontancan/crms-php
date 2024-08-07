@@ -24,7 +24,7 @@
 
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = 'SELECT customer.*, company.name AS company_name FROM customer LEFT JOIN company ON customer.company_id = company.company_id WHERE 1=1';
+        $query = 'SELECT customer.*, company.name AS company_name FROM customer LEFT JOIN company ON customer.company_id = company.company_id WHERE customer.deleted_at IS NULL';
 
         $params = [];
         if (!empty($_GET['name'])) {

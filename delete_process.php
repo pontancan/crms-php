@@ -16,8 +16,12 @@ try {
     $customer_id = $_GET['customer_id'];
     
 
-    //名前付きぱらで
+    //物理削除
     $sql = "delete from customer where customer_id = :customer_id";
+    //論理削除
+    $sql = "update customer set deleted_at = CURRENT_TIMESTAMP where customer_id = :customer_id";
+
+
 
     
     $stmt = $pdo->prepare($sql);

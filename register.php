@@ -113,7 +113,7 @@
                         <option value="company_c">C社</option>  -->
 
                         <?php
-                        //TODO 連続で登録できてしまう問題
+                        
                         while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
                             // echo '<option value="' . htmlspecialchars($row['company_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</option>';
                             echo '<option value="' . $row['company_id'] . '">' . $row['name'] . '</option>';
