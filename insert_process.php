@@ -5,7 +5,6 @@ require_once dirname(__FILE__) . '/model/Customer.php';
 
 // POSTデータを取得
 $data = [
-    'customer_id' => $_POST['customer_id'],
     'name' => $_POST['name'],
     'kana' => $_POST['kana'],
     'email' => $_POST['email'],
@@ -17,11 +16,13 @@ $data = [
 
 try{
     (new Customer())->createCustomer($data);
-header('Location: list.php');
+    header('Location: list.php');
+
 }catch (PDOException $e) {
     echo "データベース接続に失敗しました: " . $e->getMessage();
 } finally {
     $pdo = null;
+    
 }
 
 

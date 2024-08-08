@@ -104,9 +104,7 @@ class Customer extends Model
 
         } catch (PDOException $e) {
             echo "データベース接続に失敗しました: " . $e->getMessage();
-        } finally {
-            $pdo = null;
-        }
+        } 
     }
 
     function logicalDeleteCustomer($data) //指定されたidの顧客を論理的に削除する
