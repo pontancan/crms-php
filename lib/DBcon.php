@@ -13,7 +13,7 @@ class DBcon
     {
         $this->dsn = "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4";
     }
-
+    
     public function getDB(): PDO
     {
         $db = new PDO($this->dsn, $this->username, $this->password);
