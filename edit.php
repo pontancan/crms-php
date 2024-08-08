@@ -13,44 +13,12 @@
 
 <body>
     <?php
-    $host = 'localhost'; // XAMPP のデフォルトホスト
-    $dbname = 'crms_db';
-    $username = 'root';
-    $password = '';
-
-    try {
-
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-        $pdo = new PDO($dsn, $username, $password);
-
-
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-
-        // GETデータを取得
-
-        $customer_id = $_GET['customer_id'];
-
-        //名前付きぱらで
-        $sql = "select * from customer where customer_id = :customer_id";
-
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':customer_id' => $customer_id
-        ]);
-        $customer = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $sql = "SELECT company_id, name FROM company";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $companies = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo "データベース接続に失敗しました: " . $e->getMessage();
-    } finally {
-        $pdo = null;
-    }
+    require_once dirname(__FILE__) . '/lib/DBcon.php';
+    require_once dirname(__FILE__) . '/model/Company.php';
+    require_once dirname(__FILE__) . '/model/Customer.php';
+    $customer_id = $_GET['customer_id'];
+    $customer = (new Customer())->selectCustomer($customer_id);
+    $companies = (new Company())->getCompanies();
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">
@@ -128,10 +96,6 @@
                     <label for="company">所属会社<span>※</span></label>
                     <select id="company" name="company">
                         <option value="">選択してください</option>
-                        <!-- <option value="company_a">A社</option>
-                        <option value="company_b">B社</option>
-                        <option value="company_c">C社</option>  -->
-
                         <?php
                         foreach ($companies as $company) {
                             echo '<option value="' . $company['company_id'] . '"';

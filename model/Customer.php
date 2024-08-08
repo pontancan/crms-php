@@ -37,4 +37,21 @@ class Customer extends Model
             $pdo = null;
         }
     }
+
+
+    function selectCustomer($params)//指定されたidの顧客を持ってくる
+    {
+        try {
+            $query = "SELECT * FROM {$this->table} WHERE customer_id = :customer_id";
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([':customer_id' => $params]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }catch (PDOException $e) {
+            echo "データベース接続に失敗しました: " . $e->getMessage();
+        } finally {
+            $pdo = null;
+        }
+    }
+
+
 }
