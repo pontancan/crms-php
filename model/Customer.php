@@ -4,7 +4,7 @@ class Customer extends Model
 {
     protected $table = 'customer';
 
-    function getCustomers($params = [])//論理削除されていない顧客を持ってくる
+    function getCustomers($params = []) //論理削除されていない顧客を持ってくる
     {
         try {
             $query = "SELECT customer.*, company.name AS company_name FROM {$this->table} LEFT JOIN company ON customer.company_id = company.company_id WHERE customer.deleted_at IS NULL";
@@ -27,11 +27,11 @@ class Customer extends Model
             if (!empty($params[':company']) && $params[':company'] != 'all') {
                 $query .= ' AND customer.company_id = :company';
             }
-    
+
             $stmt = $this->pdo->prepare($query);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo "データベース接続に失敗しました: " . $e->getMessage();
         } finally {
             $pdo = null;
@@ -39,19 +39,72 @@ class Customer extends Model
     }
 
 
-    function selectCustomer($params)//指定されたidの顧客を持ってくる
+    function selectCustomer($params) //指定されたidの顧客を持ってくる
     {
         try {
             $query = "SELECT * FROM {$this->table} WHERE customer_id = :customer_id";
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([':customer_id' => $params]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo "データベース接続に失敗しました: " . $e->getMessage();
         } finally {
             $pdo = null;
         }
     }
 
+    function updateCustomer($data)
+    {
+        try {
+            $sql = "UPDATE {$this->table} SET 
+        name = :name, 
+        kana = :kana, 
+        email = :email, 
+        phone = :phone, 
+        gender = :gender, 
+        dob = :dob, 
+        company_id = :company_id, 
+        modified_at = CURRENT_TIMESTAMP
+        WHERE customer_id = :customer_id";
 
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':name' => $data['name'],
+                ':kana' => $data['kana'],
+                ':email' => $data['email'],
+                ':phone' => $data['phone'],
+                ':gender' => $data['gender'],
+                ':dob' => $data['dob'],
+                ':company_id' => $data['company_id'],
+                ':customer_id' => $data['customer_id']
+            ]);
+        } catch (PDOException $e) {
+            echo "データベース接続に失敗しました: " . $e->getMessage();
+        } finally {
+            $pdo = null;
+        }
+    }
+
+    function createCustomer($data)
+    {
+        try {
+            $sql = "INSERT INTO {$this->table} (name, kana, email, phone, gender, dob, company_id) 
+            VALUES (:name, :kana, :email, :phone, :gender, :dob, :company_id)";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':name' => $data['name'],
+                ':kana' => $data['kana'],
+                ':email' => $data['email'],
+                ':phone' => $data['phone'],
+                ':gender' => $data['gender'],
+                ':dob' => $data['dob'],
+                ':company_id' => $data['company_id']
+            ]);
+        } catch (PDOException $e) {
+            echo "データベース接続に失敗しました: " . $e->getMessage();
+        } finally {
+            $pdo = null;
+        }
+    }
 }
