@@ -16,31 +16,7 @@
     // ini_set('display_errors', 1);
     require_once dirname(__FILE__) . '/lib/DBcon.php';
     require_once dirname(__FILE__) . '/model/Company.php';
-
-    
-    // $host = 'localhost'; // XAMPP のデフォルトホスト
-    // $dbname = 'crms_db';
-    // $username = 'root';
-    // $password = '';
-    
-    // try {
-    //     // $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-    //     // $pdo = new PDO($dsn, $username, $password);
-        
-    //     $pdo2 = (new DBcon())-> getDB();
-
-    //     // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    //     $stt = $pdo2->prepare('SELECT company_id,name FROM company');
-    //     $stt->execute();
-    // } catch (PDOException $e) {
-    //     echo "データベース接続に失敗しました: " . $e->getMessage();
-    // } finally {
-    //     $pdo = null;
-    // }
-
     $companies = (new Company())-> getCompanies();
-
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">
@@ -117,22 +93,11 @@
                     <label for="company">所属会社<span>※</span></label>
                     <select id="company" name="company">
                         <option value="">選択してください</option>
-                        <!-- <option value="company_a">A社</option>
-                        <option value="company_b">B社</option>
-                        <option value="company_c">C社</option>  -->
-
                         <?php
-
-                        // while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
-                        //     // echo '<option value="' . htmlspecialchars($row['company_id'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</option>';
-                        //     echo '<option value="' . $row['company_id'] . '">' . $row['name'] . '</option>';
-                        // }
-
                         foreach($companies as $company){
                             echo '<option value="' . $company['company_id'] . '">' . $company['name'] . '</option>';
                         }
                         ?>
-
                     </select>
                 </div>
                 <div class="vali-group">

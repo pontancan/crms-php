@@ -13,52 +13,33 @@
 
 <body>
     <?php
-    $host = 'localhost';
-    $dbname = 'crms_db';
-    $username = 'root';
-    $password = '';
+    require_once dirname(__FILE__) . '/lib/DBcon.php';
+    require_once dirname(__FILE__) . '/model/Company.php';
+    require_once dirname(__FILE__) . '/model/Customer.php';
 
     try {
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-        $pdo = new PDO($dsn, $username, $password);
-
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $query = 'SELECT customer.*, company.name AS company_name FROM customer LEFT JOIN company ON customer.company_id = company.company_id WHERE customer.deleted_at IS NULL';
-
+        $customer = new Customer();
         $params = [];
         if (!empty($_GET['name'])) {
-            $query .= ' AND customer.name LIKE :name';
             $params[':name'] = '%' . $_GET['name'] . '%';
         }
         if (!empty($_GET['name_kana'])) {
-            $query .= ' AND customer.kana LIKE :kana';
             $params[':kana'] = '%' . $_GET['name_kana'] . '%';
         }
         if (!empty($_GET['gender']) && $_GET['gender'] != 'all') {
-            $query .= ' AND customer.gender = :gender';
             $params[':gender'] = $_GET['gender'];
         }
         if (!empty($_GET['dob_start'])) {
-            $query .= ' AND customer.dob >= :dob_start';
             $params[':dob_start'] = $_GET['dob_start'];
         }
         if (!empty($_GET['dob_end'])) {
-            $query .= ' AND customer.dob <= :dob_end';
             $params[':dob_end'] = $_GET['dob_end'];
         }
         if (!empty($_GET['company']) && $_GET['company'] != 'all') {
-            $query .= ' AND customer.company_id = :company';
             $params[':company'] = $_GET['company'];
         }
-
-        $stt = $pdo->prepare($query);
-        $stt->execute($params);
-
-        // 会社データの取得
-        $companyStmt = $pdo->prepare('SELECT company_id, name FROM company');
-        $companyStmt->execute();
-        $companies = $companyStmt->fetchAll(PDO::FETCH_ASSOC);
+        $customers = $customer->getCustomers($params);
+        $companies = (new Company())-> getCompanies();
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     }
@@ -158,21 +139,21 @@
                 </thead>
                 <tbody id="customer-table-body">
                     <?php
-                    if ($stt->rowCount() === 0) { ?>
+                    if (empty($customers)) { ?>
                         <div>登録されている顧客情報はありません</div>
                     <?php
                     } else {
-                        while ($row = $stt->fetch(PDO::FETCH_ASSOC)) {
+                        foreach($customers as $customer) {
                             echo '<form name="deleteForm" method="post" action="delete_process.php">';
                             echo '<tr>';
-                            echo '<td>' . $row['customer_id'] . '</td>';
-                            echo '<td>' . $row['name'] . '<br>' . $row['kana'] . '</td>';
-                            echo '<td>' . $row['email'] . '<br>' . $row['phone'] . '</td>';
-                            echo '<td>' . $row['company_name'] . '</td>';
-                            echo '<td>' . $row['created_at'] . '<br>' . $row['modified_at'] . '</td>';
-                            echo '<td> <button type="button" onclick="location.href=\'edit.php?customer_id=' . $row['customer_id'] . '\'" class="edit-button">編集</button> </td>';
-                            echo '<td> <button type="button" class="delete-button" onclick="confirmDelete(' . $row['customer_id'] . ')">削除</button> </td>';
-                            echo '<input type="hidden" name="customer_id" value="' . $row['customer_id'] . '" />';
+                            echo '<td>' . $customer['customer_id'] . '</td>';
+                            echo '<td>' . $customer['name'] . '<br>' . $customer['kana'] . '</td>';
+                            echo '<td>' . $customer['email'] . '<br>' . $customer['phone'] . '</td>';
+                            echo '<td>' . $customer['company_name'] . '</td>';
+                            echo '<td>' . $customer['created_at'] . '<br>' . $customer['modified_at'] . '</td>';
+                            echo '<td> <button type="button" onclick="location.href=\'edit.php?customer_id=' . $customer['customer_id'] . '\'" class="edit-button">編集</button> </td>';
+                            echo '<td> <button type="button" class="delete-button" onclick="confirmDelete(' . $customer['customer_id'] . ')">削除</button> </td>';
+                            echo '<input type="hidden" name="customer_id" value="' . $customer['customer_id'] . '" />';
                             echo '</tr>';
                             echo '</form>';
                         }
