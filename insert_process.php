@@ -14,7 +14,14 @@ $data = [
     'dob' => $_POST['dob'],
     'company_id' => $_POST['company']
 ];
-(new Customer())->createCustomer($data);
 
+try{
+    (new Customer())->createCustomer($data);
 header('Location: list.php');
-exit();
+}catch (PDOException $e) {
+    echo "データベース接続に失敗しました: " . $e->getMessage();
+} finally {
+    $pdo = null;
+}
+
+

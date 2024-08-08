@@ -101,6 +101,7 @@ class Customer extends Model
                 ':dob' => $data['dob'],
                 ':company_id' => $data['company_id']
             ]);
+
         } catch (PDOException $e) {
             echo "データベース接続に失敗しました: " . $e->getMessage();
         } finally {

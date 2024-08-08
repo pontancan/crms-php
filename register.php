@@ -44,28 +44,28 @@
             <form id="registerForm" action="./insert_process.php" class="register" method="post">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
-                    <input type="text" id="name" name="name" value="">
+                    <input type="text" id="name" name="name" value="インセクト嵯峨">
                 </div>
                 <div class="vali-group">
                     <div id="name_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="kana">顧客名カナ<span>※</span></label>
-                    <input type="text" id="kana" name="kana" placeholder="" value="">
+                    <input type="text" id="kana" name="kana" placeholder="" value="インセクトサガ">
                 </div>
                 <div class="vali-group">
                     <div id="kana_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="email">メールアドレス<span>※</span></label>
-                    <input type="text" id="email" name="email" value="">
+                    <input type="text" id="email" name="email" value="incent@glo.com">
                 </div>
                 <div class="vali-group">
                     <div id="email_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="phone">電話番号<span>※</span></label>
-                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="">
+                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="0020102011">
                 </div>
                 <div class="vali-group">
                     <div id="phone_message" class="message"></div> <br />
