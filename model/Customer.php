@@ -107,4 +107,17 @@ class Customer extends Model
             $pdo = null;
         }
     }
+
+    function logicalDeleteCustomer($data) //指定されたidの顧客を論理的に削除する
+    {
+        try {
+            $query = "UPDATE {$this->table} SET deleted_at = CURRENT_TIMESTAMP WHERE customer_id = :customer_id";;
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([':customer_id' => $data]);
+        } catch (PDOException $e) {
+            echo "データベース接続に失敗しました: " . $e->getMessage();
+        } finally {
+            $pdo = null;
+        }
+    }
 }
