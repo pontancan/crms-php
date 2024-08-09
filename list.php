@@ -221,6 +221,10 @@
                     ?>
                     <p>現在のページ: <?= $pagerfanta->getCurrentPage(); ?> / <?= $pagerfanta->getNbPages(); ?></p>
                 </div>
+                <div class="pagination-options">
+                    <a href="?page=1&limit=10">10件表示</a> |
+                    <a href="?page=1&limit=20">20件表示</a>
+                </div>
             </table>
         </div>
     </main>

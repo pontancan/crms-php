@@ -398,3 +398,7 @@ form {
     margin-top: 10px;
 }
 
+.pagination-options{
+    text-decoration: none;
+}
+
