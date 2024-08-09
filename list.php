@@ -15,6 +15,10 @@
     <?php
     require_once dirname(__FILE__) . '/model/Company.php';
     require_once dirname(__FILE__) . '/model/Customer.php';
+    require_once __DIR__ . '/vendor/autoload.php';
+
+    use Pagerfanta\Pagerfanta;
+    use Pagerfanta\Adapter\ArrayAdapter;
 
     try {
         $customer = new Customer();
@@ -37,7 +41,21 @@
         if (!empty($_GET['company']) && $_GET['company'] != 'all') {
             $params[':company'] = $_GET['company'];
         }
-        $customers = $customer->getCustomers($params);
+        $allCustomers = $customer->getCustomers($params);
+        // `ArrayAdapter` を使って、配列をページネーション対応にする
+        $adapter = new ArrayAdapter($allCustomers);
+        $pagerfanta = new Pagerfanta($adapter);
+
+        // 現在のページを設定（例: URLから取得）
+        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $pagerfanta->setCurrentPage($current_page);
+
+        // 1ページに表示する件数を設定
+        $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+        $pagerfanta->setMaxPerPage($limit);
+
+        // 現在のページに表示するデータを取得
+        $customers = $pagerfanta->getCurrentPageResults();
         $company = new Company();
         $companies = $company->getCompanies();
 
@@ -189,6 +207,20 @@
                     }
                     ?>
                 </tbody>
+                <div class="pagination">
+                    <?php
+
+                    use Pagerfanta\View\DefaultView;
+
+                    $view = new DefaultView();
+                    $routeGenerator = function ($page) use ($limit) {
+                        return '?page=' . $page . '&limit=' . $limit;
+                    };
+
+                    echo $view->render($pagerfanta, $routeGenerator);
+                    ?>
+                    <p>現在のページ: <?= $pagerfanta->getCurrentPage(); ?> / <?= $pagerfanta->getNbPages(); ?></p>
+                </div>
             </table>
         </div>
     </main>
