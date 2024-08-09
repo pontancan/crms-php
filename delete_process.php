@@ -5,7 +5,8 @@ require_once dirname(__FILE__) . '/model/Customer.php';
     $customer_id = $_GET['customer_id'];
     //物理削除
     // $sql = "delete from customer where customer_id = :customer_id";
-    (new Customer()) -> logicalDeleteCustomer($customer_id);
+    $customer = new Customer();
+    $customer -> logicalDeleteCustomer($customer_id);
     header('Location: list.php');
     exit();
 

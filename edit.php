@@ -17,8 +17,11 @@
     require_once dirname(__FILE__) . '/model/Company.php';
     require_once dirname(__FILE__) . '/model/Customer.php';
     $customer_id = $_GET['customer_id'];
-    $customer = (new Customer())->selectCustomer($customer_id);
-    $companies = (new Company())->getCompanies();
+    
+    $customer = new Customer();
+    $customer = $customer->selectCustomer($customer_id);
+    $company = new Company();
+    $companies = $company->getCompanies();
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">

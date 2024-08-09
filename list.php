@@ -39,7 +39,8 @@
             $params[':company'] = $_GET['company'];
         }
         $customers = $customer->getCustomers($params);
-        $companies = (new Company())-> getCompanies();
+        $company = new Company();
+        $companies = $company-> getCompanies();
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     }

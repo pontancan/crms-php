@@ -16,7 +16,8 @@
     // ini_set('display_errors', 1);
     require_once dirname(__FILE__) . '/lib/DBcon.php';
     require_once dirname(__FILE__) . '/model/Company.php';
-    $companies = (new Company())-> getCompanies();
+    $company = new Company();
+    $companies = $company -> getCompanies();
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">

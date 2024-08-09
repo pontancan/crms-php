@@ -15,7 +15,8 @@ $data = [
 ];
 
 try{
-    (new Customer())->createCustomer($data);
+    $customer = new Customer();
+    $customer->createCustomer($data);
     header('Location: list.php');
 
 }catch (PDOException $e) {

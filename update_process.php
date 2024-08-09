@@ -14,7 +14,8 @@
             'dob' => $_POST['dob'],
             'company_id' => $_POST['company']
         ];
-        (new Customer())->updateCustomer($data);
+        $customer = new Customer();
+        $customer->updateCustomer($data);
 
         header('Location: list.php');
         exit();
