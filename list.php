@@ -13,7 +13,6 @@
 
 <body>
     <?php
-    // require_once dirname(__FILE__) . '/lib/DBcon.php';
     require_once dirname(__FILE__) . '/model/Company.php';
     require_once dirname(__FILE__) . '/model/Customer.php';
 
@@ -40,7 +39,21 @@
         }
         $customers = $customer->getCustomers($params);
         $company = new Company();
-        $companies = $company-> getCompanies();
+        $companies = $company->getCompanies();
+
+        function buildQueryString($params)
+        {
+            $queryArray = [];
+            foreach ($params as $key => $value) {
+                if (!empty($value)) {
+                    $queryArray[] = urlencode($key) . '=' . urlencode($value);
+                }
+            }
+            return implode('&', $queryArray);
+        }
+
+        // 現在の検索条件をクエリストリングに変換
+        $currentQueryString = buildQueryString($_GET);
     } catch (PDOException $e) {
         echo "データベース接続に失敗しました: " . $e->getMessage();
     }
@@ -129,11 +142,26 @@
             <table class="customer-table">
                 <thead>
                     <tr>
-                        <th>顧客ID</th>
+                        <th>
+                            顧客ID
+                            <div class="ly-colum">
+                                <a href="?<?= $currentQueryString ?>&sort=customer_id&order=asc"><i class="fas fa-sort-up"></i></a>
+                                <a href="?<?= $currentQueryString ?>&sort=customer_id&order=desc"><i class="fas fa-sort-down"></i></a>
+                            </div>
+                        </th>
+
                         <th>顧客名<br>顧客名カナ</th>
                         <th>メールアドレス<br>電話番号</th>
                         <th>所属会社</th>
-                        <th>新規登録日時<br>最終更新日時</th>
+                        <th>
+                            新規登録日時
+                            <br>
+                            最終更新日時
+                            <div class="ly-colum">
+                                <a href="?<?= $currentQueryString ?>&sort=modified_at&order=asc"><i class="fas fa-sort-up"></i></a>
+                                <a href="?<?= $currentQueryString ?>&sort=modified_at&order=desc"><i class="fas fa-sort-down"></i></a>
+                            </div>
+                        </th>
                         <th>編集</th>
                         <th>削除</th>
                     </tr>
@@ -144,7 +172,7 @@
                         <div>登録されている顧客情報はありません</div>
                     <?php
                     } else {
-                        foreach($customers as $customer) {
+                        foreach ($customers as $customer) {
                             echo '<form name="deleteForm" method="post" action="delete_process.php">';
                             echo '<tr>';
                             echo '<td>' . $customer['customer_id'] . '</td>';

@@ -28,6 +28,25 @@ class Customer extends Model
             $query .= ' AND customer.company_id = :company';
         }
 
+        if (!empty($_GET['sort']) && !empty($_GET['order'])) {
+            $sort = $_GET['sort'];
+            $order = strtoupper($_GET['order']) === 'ASC' ? 'ASC' : 'DESC';
+    
+            // 更新日時での並び替え
+            if ($sort == 'modified_at') {
+                $query .= " ORDER BY customer.modified_at $order";
+            } else {
+                // その他のソート条件
+                $validSortColumns = ['customer_id', 'created_at'];
+                if (in_array($sort, $validSortColumns)) {
+                    $query .= " ORDER BY $sort $order";
+                }
+            }
+        } else {
+            // デフォルトの並び順を設定
+            $query .= " ORDER BY customer.customer_id ASC";
+        }
+
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

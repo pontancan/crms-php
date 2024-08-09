@@ -361,3 +361,18 @@ form {
     color: red;
 }
 
+
+
+.ly-colum{
+    
+    display: inline-flex;
+    flex-direction: column; /* アイコンを縦に並べる */
+    align-items: right;
+    margin-left: 5px; /
+}
+.ly-colum > a{
+    text-decoration: none;
+    color: inherit;
+    /* padding: 2px 0; */
+}
+
