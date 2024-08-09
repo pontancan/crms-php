@@ -87,7 +87,7 @@ class Customer extends Model
 
     function createCustomer($data)
     {
-        try {
+        
             $sql = "INSERT INTO {$this->table} (name, kana, email, phone, gender, dob, company_id) 
             VALUES (:name, :kana, :email, :phone, :gender, :dob, :company_id)";
 
@@ -101,10 +101,6 @@ class Customer extends Model
                 ':dob' => $data['dob'],
                 ':company_id' => $data['company_id']
             ]);
-
-        } catch (PDOException $e) {
-            echo "データベース接続に失敗しました: " . $e->getMessage();
-        } 
     }
 
     function logicalDeleteCustomer($data) //指定されたidの顧客を論理的に削除する
