@@ -45,28 +45,28 @@
             <form id="registerForm" action="./insert_process.php" class="register" method="post">
                 <div class="form-group">
                     <label for="name">顧客名<span>※</span></label>
-                    <input type="text" id="name" name="name" value="インセクト嵯峨">
+                    <input type="text" id="name" name="name" value="">
                 </div>
                 <div class="vali-group">
                     <div id="name_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="kana">顧客名カナ<span>※</span></label>
-                    <input type="text" id="kana" name="kana" placeholder="" value="インセクトサガ">
+                    <input type="text" id="kana" name="kana" placeholder="" value="">
                 </div>
                 <div class="vali-group">
                     <div id="kana_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="email">メールアドレス<span>※</span></label>
-                    <input type="text" id="email" name="email" value="incent@glo.com">
+                    <input type="text" id="email" name="email" value="">
                 </div>
                 <div class="vali-group">
                     <div id="email_message" class="message"></div> <br />
                 </div>
                 <div class="form-group">
                     <label for="phone">電話番号<span>※</span></label>
-                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="0020102011">
+                    <input type="text" id="phone" name="phone" placeholder="ハイフン(-)は不要" value="">
                 </div>
                 <div class="vali-group">
                     <div id="phone_message" class="message"></div> <br />
@@ -85,7 +85,7 @@
                 </div>
                 <div class="form-group">
                     <label for="dob">生年月日<span>※</span></label>
-                    <input type="date" id="dob" name="dob" value="1996-01-01">
+                    <input type="date" id="dob" name="dob" value="">
                 </div>
                 <div class="vali-group">
                     <div id="dob_message" class="message"></div> <br />
