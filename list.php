@@ -55,7 +55,7 @@
         // 現在の検索条件をクエリストリングに変換
         $currentQueryString = buildQueryString($_GET);
     } catch (PDOException $e) {
-        echo "データベース接続に失敗しました: " . $e->getMessage();
+        echo "リストの取得に失敗しました: " . $e->getMessage();
     }
     ?>
     <header class="header l-contents">

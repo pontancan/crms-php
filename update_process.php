@@ -14,8 +14,15 @@
             'dob' => $_POST['dob'],
             'company_id' => $_POST['company']
         ];
-        $customer = new Customer();
-        $customer->updateCustomer($data);
 
-        header('Location: list.php');
-        exit();
+
+        try{
+            $customer = new Customer();
+            $customer->updateCustomer($data);
+    
+            header('Location: list.php');
+
+        }catch(PDOException $e){
+            echo "データベースの更新に失敗しました: " . $e->getMessage();
+            exit();
+        }

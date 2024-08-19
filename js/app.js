@@ -3,3 +3,4 @@ function confirmDelete(id) {
         location.href = 'delete_process.php?customer_id=' + id;
     }
 }
+
