@@ -52,9 +52,9 @@ function validateKana() {
     } else if (input_kana.value.trim().length < 3) {
         kana_message.innerText = '3文字以上必要です';
         isKanaValid = false;
-    } else if(input_name.value.trim().length > 16){
-        name_message.innerText = '入力できるのは16文字までです';
-        isNameValid = false;
+    } else if(input_kana.value.trim().length > 16){
+        kana_message.innerText = '入力できるのは16文字までです';
+        isKanaValid = false;
     }else {
         kana_message.innerText = '';
         isKanaValid = true;

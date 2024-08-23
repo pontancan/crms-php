@@ -55,7 +55,7 @@ function validateKana() {
         isKanaValid = false;
     } else if(input_kana.value.trim().length > 16){
         kana_message.innerText = '入力できるのは16文字までです';
-        isNameValid = false;
+        isKanaValid = false;
     }else {
         kana_message.innerText = '';
         isKanaValid = true;
