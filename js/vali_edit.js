@@ -63,20 +63,26 @@ function validateKana() {
 
 function validateEmail() {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const re_html5 = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-;
-
-    if (input_email.value.trim() === '') {
+    const re_html5 = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    
+    const email = input_email.value.trim();
+    const localPart = email.split('@')[0]; // @より前の部分を取得
+    
+    if (email === '') {
         email_message.innerText = '入力は必須です';
         isEmailValid = false;
-    } else if (!re_html5.test(input_email.value.trim())) {
+    } else if (!re_html5.test(email)) {
         email_message.innerText = '有効なメールアドレスではありません';
+        isEmailValid = false;
+    } else if (localPart.length > 64) {
+        email_message.innerText = 'メールアドレスのローカル部は64文字以下にしてください';
         isEmailValid = false;
     } else {
         email_message.innerText = '';
         isEmailValid = true;
     }
 }
+
 
 function validatePhone() {
     const re = /^\d{10,11}$/;
