@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__FILE__) . '/lib/DBcon.php';
+// require_once dirname(__FILE__) . '/lib/DBcon.php';
 require_once dirname(__FILE__) . '/model/Company.php';
 require_once dirname(__FILE__) . '/model/Customer.php';
 

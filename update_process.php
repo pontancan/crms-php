@@ -3,7 +3,7 @@
         require_once dirname(__FILE__) . '/model/Company.php';
         require_once dirname(__FILE__) . '/model/Customer.php';
 
-        // POSTデータを取得
+        //POSTデータを取得
         $data = [
             'customer_id' => $_POST['customer_id'],
             'name' => $_POST['name'],
@@ -26,7 +26,7 @@
             echo "データベース更新に失敗しました: " . $e->getMessage();
             echo "<p id='countdown'>5秒後にリストページにリダイレクトします...</p>";
             echo "<script>
-                    var countdownNumber = 3;
+                    var countdownNumber = 5;
                     var countdownElement = document.getElementById('countdown');
                     var countdownInterval = setInterval(function() {
                         countdownNumber--;

@@ -14,7 +14,7 @@
 <body>
     <?php
     // ini_set('display_errors', 1);
-    require_once dirname(__FILE__) . '/lib/DBcon.php';
+    // require_once dirname(__FILE__) . '/lib/DBcon.php';
     require_once dirname(__FILE__) . '/model/Company.php';
     $company = new Company();
     $companies = $company -> getCompanies();

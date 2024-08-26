@@ -53,7 +53,7 @@ class Customer extends Model
     }
 
 
-    function selectCustomer($params) //指定されたidの顧客を持ってくる
+    function selectCustomer($params) //指定されたidの顧客を持ってくるprimary外だし
     {
         $query = "SELECT * FROM {$this->table} WHERE customer_id = :customer_id";
         $stmt = $this->pdo->prepare($query);
@@ -106,7 +106,7 @@ class Customer extends Model
         ]);
     }
 
-    function logicalDeleteCustomer($data) //指定されたidの顧客を論理的に削除する
+    function logicalDeleteCustomer($data) //指定されたidの顧客を論理的に削除するprimaryで共通化させる
     {
         $query = "UPDATE {$this->table} SET deleted_at = CURRENT_TIMESTAMP WHERE customer_id = :customer_id";;
         $stmt = $this->pdo->prepare($query);

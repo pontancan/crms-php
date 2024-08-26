@@ -76,7 +76,7 @@ function validateEmail() {
         email_message.innerText = '有効なメールアドレスではありません';
         isEmailValid = false;
     } else if (localPart.length > 64) {
-        email_message.innerText = 'メールアドレスのローカル部は64文字以下にしてください';
+        email_message.innerText = '別のメールアドレスを使用してください';
         isEmailValid = false;
     } else {
         email_message.innerText = '';
