@@ -15,4 +15,14 @@ class Model
         $stmt = $this->pdo->query("SELECT * FROM {$this->table}");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function LogicalDelete($id)
+    {
+        // プライマリキーに基づいてレコードを削除
+        $stmt = $this->pdo->prepare("DELETE FROM {$this->table} WHERE {$this->primary} = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+
 }

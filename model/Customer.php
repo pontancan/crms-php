@@ -3,6 +3,12 @@ require_once dirname(__FILE__) . "/Model.php";
 class Customer extends Model
 {
     protected $table = 'customer';
+    protected $primary = 'customer_id';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     function getCustomers($params = []) //論理削除されていない顧客を持ってくる
 

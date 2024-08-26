@@ -8,7 +8,7 @@ require_once dirname(__FILE__) . '/model/Customer.php';
 
     try{
         $customer = new Customer();
-        $customer -> logicalDeleteCustomer($customer_id);
+        $customer -> logicalDelete($customer_id);
         header('Location: list.php');
 
     }catch(PDOException $e){

@@ -17,7 +17,7 @@
     // require_once dirname(__FILE__) . '/lib/DBcon.php';
     require_once dirname(__FILE__) . '/model/Company.php';
     $company = new Company();
-    $companies = $company -> getCompanies();
+    $companies = $company -> select();
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">
