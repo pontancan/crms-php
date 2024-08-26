@@ -21,7 +21,7 @@
     $customer = new Customer();
     $customer = $customer->selectCustomer($customer_id);
     $company = new Company();
-    $companies = $company->getCompanies();
+    $companies = $company->select();
     ?>
     <header class="header l-contents">
         <a class="logo" href="./index.php">

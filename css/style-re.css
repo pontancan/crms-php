@@ -376,3 +376,9 @@ form {
     /* padding: 2px 0; */
 }
 
+.scroll-container {
+    max-height: 400px; /* スクロール領域の高さ */
+    overflow-y: auto;  /* 縦方向のスクロールを有効に */
+    border: 1px solid #ddd; /* コンテナの境界線 */
+}
+

@@ -39,7 +39,7 @@
         }
         $customers = $customer->getCustomers($params);
         $company = new Company();
-        $companies = $company->getCompanies();
+        $companies = $company->select();
 
         function buildQueryString($params)
         {
@@ -139,7 +139,8 @@
                 </div>
             </form>
             <hr>
-            <table class="customer-table">
+            <div class="scroll-container">
+                <table class="customer-table">
                 <thead>
                     <tr>
                         <th>
@@ -190,6 +191,8 @@
                     ?>
                 </tbody>
             </table>
+            </div>
+            
         </div>
     </main>
     <footer class="footer">
