@@ -23,6 +23,19 @@
             header('Location: list.php');
 
         }catch(PDOException $e){
-            echo "データベースの更新に失敗しました: " . $e->getMessage();
-            exit();
+            echo "データベース更新に失敗しました: " . $e->getMessage();
+            echo "<p id='countdown'>5秒後にリストページにリダイレクトします...</p>";
+            echo "<script>
+                    var countdownNumber = 3;
+                    var countdownElement = document.getElementById('countdown');
+                    var countdownInterval = setInterval(function() {
+                        countdownNumber--;
+                        countdownElement.textContent = countdownNumber + '秒後にリストページにリダイレクトします...';
+                        if (countdownNumber <= 0) {
+                            clearInterval(countdownInterval);
+                            window.location.href = 'list.php';
+                        }
+                    }, 1000);
+                  </script>";
+            exit(); 
         }
